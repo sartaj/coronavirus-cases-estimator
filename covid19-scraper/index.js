@@ -93,7 +93,7 @@ const handler = async (event, context, callback) => {
   const fs = require("fs");
   const path = require("path");
   fs.writeFileSync(
-    path.join(__dirname, "../", "data.json"),
+    path.join(__dirname, "../src", "data.json"),
     JSON.stringify(countriesData, null, 2)
   );
 
