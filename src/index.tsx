@@ -30,30 +30,30 @@ const Article = () => (
       Coronavirus Disease (COVID-19) test data has proven to be highly
       unreliable.
     </Typography.Title>
-    <Typography.Text>
+    <Typography.Paragraph style={{ fontSize: "16px" }}>
       Despite{" "}
       <a href="https://www.statnews.com/2020/03/17/a-fiasco-in-the-making-as-the-coronavirus-pandemic-takes-hold-we-are-making-decisions-without-reliable-data/">
         mounting evidence
       </a>{" "}
       that the majority of positive cases are asymptomatic, countries like the
-      United States only have the capacity to test patients who are showing
-      major symptoms. This means, total cases data, and any data deriving from
-      tit, including mortality rate and infectiousness, are unreliable.
-    </Typography.Text>
+      United States are still only testing patients who show
+      major symptoms. This means collected data on total cases or any insights derived from
+      that data, including mortality rate, are unreliable.
+    </Typography.Paragraph>
     <Typography.Title level={3}>
       Iceland did better. We can do (slightly) better.
     </Typography.Title>
     <Typography.Paragraph style={{ fontSize: "16px" }}>
-      Since March 14, the Goverment of Iceland been screening healthy as well as
-      sick people,{" "}
+      Since March 14, Iceland's National Government has been strategically screening
+      both sick and healthy people,{" "}
       <a href="https://www.covid.is/data">
-        giving a far more accurate picture of COVID-19
+        providing a far more accurate picture of COVID-19
       </a>
-      . In fact, currently Iceland has <a href="https://www.worldometers.info/coronavirus/">the highest tests per million of any
+      . In fact, Iceland currently leads in <a href="https://www.worldometers.info/coronavirus/">the highest tests per million of any
       major nation.</a>{" "}
       <strong>
-        This mean's Iceland's data is the closest the world currently has to a
-        more complete picture of coronavirus test cases.
+        With a high testing rate and strategic selection of those tested, Iceland's data plays a key role in the global understanding of
+        this pandemic and the accuracy of tests.
       </strong>
     </Typography.Paragraph>
     <Typography.Paragraph style={{ fontSize: "16px" }}>
@@ -64,24 +64,21 @@ const Article = () => (
       </a>
     </Typography.Paragraph>
     <Typography.Paragraph style={{ fontSize: "16px" }}>
-      What this means is, sure, while the death rate is much lower, the
-      infection rate is still significantly higher than any current reported
-      statistics are showing.
+      While the death rate is much lower, this means that the
+      infection rate is significantly higher than current reported
+      figures.
     </Typography.Paragraph>
     <Typography.Paragraph
       style={{ fontSize: "24px", fontStyle: "italic", margin: "2rem" }}
     >
-      So what if we used Iceland's data to estimate the actual total cases in other countries?
+      So how can we use Iceland's data to better estimate the true total cases in other countries?
     </Typography.Paragraph>
     <Typography.Title level={3}>Methodology</Typography.Title>
     <Typography.Paragraph style={{ fontSize: "16px" }}>
-      The following shows current data of reported total cases in the world,
-      compared to Icelands total cases. The way we do is by looking at 2
-      statistics that have a high reliability rate: the total death count. While
-      things like hospitalization rate could be influenced by panic, and
-      infection rate is muddled by the lack of randomized testing, statistics
-      like ICU counts and death counts are done by doctors based on proven
-      medical issues.
+      The following shows data comparing total reported deaths in the world
+      and Iceland's total reported cases and deaths.  Statistics like ICU counts and death counts are highly reliable. 
+      Using these death counts with Iceland's reported infection rate, we can
+      derive a closer estimation of the true infection rate (x) in each country.
       <br />
       <img
         src={require("./equation.gif")}
@@ -99,39 +96,35 @@ const Article = () => (
       <ul>
         <li>
           The numbers here{" "}
-          <strong>SHOULD NOT be quoted as exact numbers</strong>, as the
-          variance can be a lot as Iceland, and the rest of the world, continue
-          to update their dataset.
+          <strong>SHOULD NOT be quoted as exact numbers</strong>, for many reasons:  We not only have lagging data
+          updated at different points in time, but Iceland's population is unique from many other countries' in size, age, and even lifestyle.
+          The goal of using Iceland's reported infection rate is to get a better sense of the vast number of infected people that are difficult to identify.
         </li>
         <li>
-          Death rates vary widely by country, based on things like population
-          age. So this data over time would probably be more indicative of
+          Death rates can vary widely by country, based on factors such as population size & age, time of first confirmed case, government measures, etc.
+          So this data over time will likely have less variance when applied to
           countries with similar{" "}
           <a href="https://www.indexmundi.com/iceland/demographics_profile.html">
             age distributions
           </a>{" "}
-          to Iceland.
-        </li>
-        <li>
-          Iceland currently has a low death count. As it inceases, the variance
-          on this data should decrease.
+          to that of Iceland.
         </li>
       </ul>
     </Typography.Paragraph>
     <Typography.Title level={3}>The Bottom Line</Typography.Title>
     <Typography.Paragraph style={{ fontSize: "16px" }}>
-      These figures should help us understand better the severity of the
-      infection rate of coronavirus, as even with wide variances in estimates,
-      all the variances are at least 5x-20x larger than the current reported
-      tests cases in countries like the United States, meaning everything from
-      death rate to hospitalization rates are completely unreliable.
+      These figures can provide a better depiction of how much more severe the
+      COVID-19 infection rate is than what is reported. Although these estimates include high variance, the disparity between
+      the total reported cases and the estimated number of cases is largely due to lack and inaccuracy of testing practices. 
+      All estimates are at least 5x-20x larger than the total reported cases, meaning
+      death rates and hospitalization rates are innaccurate and incredibly conservative.
     </Typography.Paragraph>
     <Typography.Title level={3}>Help Improve the Estimates</Typography.Title>
     <Typography.Paragraph style={{ fontSize: "16px" }}>
-      As Iceland gets to testing the majority of their population, these
-      estimates should improve over time. Also, it would be good to add more
-      parameters of hard data, such as ICU admittance stats, and also
-      normalizing for different nations based on age distribution. <br /><br />
+      As Iceland approaches completing tests for the majority of their population, these
+      estimates should also improve. Adding more
+      considerations to the model such as ICU admittance stats and
+      normalizing for different nations based on age distribution will also improve results. <br /><br />
       Want to help? Check out the{" "}
       <a href="http://sartaj.me/coronavirus-cases-estimator/">
         source code on GitHub
