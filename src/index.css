@@ -12,9 +12,17 @@
 }
 
 .header-text {
-    background-color: #d65961;
+    background-color: #fff;
+    text-align: left;
+    padding: 5rem;
+    max-width: 900px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .header-text * {
-    color: white!important
+    color: black!important
 }

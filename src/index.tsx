@@ -30,22 +30,16 @@ const App = () => {
   return (
     <div>
       <div
-        style={{
-          textAlign: "left",
-          minHeight: "50vh",
-          marginBottom: "2rem",
-          padding: "10rem",
-        }}
         className="header-text"
       >
-        <Typography.Title level={2}style={{ textAlign: "center" }}>
+        <Typography.Title level={1} style={{ textAlign: "center" }}>
           Getting a Better Estimate on Total Coronvirus Cases
         </Typography.Title>
-        <Typography.Title level={1}>
+        <Typography.Title level={2}>
           Coronavirus Disease (COVID-19) test data has proven to be highly
           unreliable.
         </Typography.Title>
-        <Typography.Paragraph style={{fontSize: '24px'}}>
+        <Typography.Paragraph style={{ fontSize: "16px" }}>
           Despite mounting evidence that the majority of positive cases are asymptomatic, countries like the United States only have the capacity to test patients who are showing major symptoms.
           This means, total cases data, and any data deriving from tit, including mortality rate and infectiousness, are unreliable.
         </Typography.Paragraph>
