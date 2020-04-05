@@ -50,7 +50,7 @@ const Article = () => (
         providing a far more accurate picture of COVID-19
       </a>
       . In fact, Iceland currently leads in <a href="https://www.worldometers.info/coronavirus/">the highest tests per million of any
-      major nation.</a>{" "}
+      major nation.</a><br /><br />
       <strong>
         With a high testing rate and strategic selection of those tested, Iceland's data plays a key role in the global understanding of
         this pandemic and the accuracy of tests.
@@ -126,7 +126,7 @@ const Article = () => (
       considerations to the model such as ICU admittance stats and
       normalizing for different nations based on age distribution will also improve results. <br /><br />
       Want to help? Check out the{" "}
-      <a href="http://sartaj.me/coronavirus-cases-estimator/">
+      <a href="http://github.com/sartaj/coronavirus-cases-estimator/">
         source code on GitHub
       </a>
       , or feel free to{" "}
