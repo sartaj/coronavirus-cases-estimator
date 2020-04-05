@@ -8,8 +8,8 @@
     "dev": "parcel ./src/index.html",
     "predeploy": "rm -rf dist && parcel build ./src/index.html --public-url /coronavirus-cases-estimator",
     "deploy": "gh-pages -d dist",
-    "update-data": "cd covid19-scraper && node index.js",
-    "data": "npm run update-data && git commit -am 'update data' && git push && npm run deploy"
+    "scrape-data": "cd covid19-scraper && node index.js",
+    "update-data": "npm run scrape-data && git commit -am 'update data' && git push && npm run deploy"
   },
   "author": "",
   "license": "ISC",
