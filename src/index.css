@@ -11,3 +11,10 @@
     margin-bottom: 10px;
 }
 
+.header-text {
+    background-color: #d65961;
+}
+
+.header-text * {
+    color: white!important
+}
