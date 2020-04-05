@@ -14,13 +14,10 @@
 .header-text {
     background-color: #fff;
     text-align: left;
-    padding: 5rem;
-    max-width: 900px;
+    padding: 1rem;
+    width: 100%;
+    max-width: 700px;
     margin: 0 auto;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
 }
 
 .header-text * {

@@ -1,11 +1,14 @@
-const dataWithHeaders = require("./data.json");
+const dataJson = require("./data.json");
+const dataWithHeaders = dataJson.countriesData;
 const totalDeathsIndex = dataWithHeaders[0].indexOf("totalDeaths");
 const totalCasesIndex = dataWithHeaders[0].indexOf("totalCases");
 const countryNameIndex = 0;
 
-const MINIMIM_DEATH_THRESHOLD = 4
+export const lastUpdated = dataJson.lastUpdated;
 
-export const data = dataWithHeaders.slice(1)
+const MINIMIM_DEATH_THRESHOLD = 4;
+
+export const data = dataWithHeaders.slice(1);
 
 export const calculateOffOfReliableData = (
   comparisonCountryTotalCases,
@@ -64,7 +67,9 @@ export const estimator = (mostReliableTestData, data): Estimator[] => {
         estimatedTotalCasesBasedOnIceland,
       };
     })
-    .filter(({ reportedTotalDeaths }) => reportedTotalDeaths > MINIMIM_DEATH_THRESHOLD);
+    .filter(
+      ({ reportedTotalDeaths }) => reportedTotalDeaths > MINIMIM_DEATH_THRESHOLD
+    );
 
   return dataWithEstimatedTotals;
 };

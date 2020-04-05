@@ -1,11 +1,12 @@
 "use strict";
 
-const handler = async (event, context, callback) => {
-  var webdriver = require("selenium-webdriver");
-  var chrome = require("selenium-webdriver/chrome");
-  let chromedriver = require("chromedriver");
+const scrapeWorldometersCoronavirusTable = async () => {
+  const webdriver = require("selenium-webdriver");
+  const chrome = require("selenium-webdriver/chrome");
+  const chromedriver = require("chromedriver");
 
-  function setUp() {
+  function setUpSelenium() {
+    console.log("setting up selenium...");
     chrome.setDefaultService(
       new chrome.ServiceBuilder(chromedriver.path).build()
     );
@@ -38,8 +39,9 @@ const handler = async (event, context, callback) => {
   }
 
   async function run() {
-    const driver = setUp();
+    const driver = setUpSelenium();
 
+    console.log("getting worldometer's site...");
     driver.get("https://www.worldometers.info/coronavirus/");
 
     const headers = [
@@ -62,10 +64,12 @@ const handler = async (event, context, callback) => {
 
     let countriesData = [headers];
 
+    console.log("searching for coronavirus table...");
     const table = await driver.findElement(
       webdriver.By.xpath('//*[@id="main_table_countries_today"]/tbody[1]')
     );
 
+    console.log("scraping table...");
     // Loop through the table
     for (let x = 1; x < amountOfRows; x++) {
       let countryInfo = [];
@@ -83,20 +87,42 @@ const handler = async (event, context, callback) => {
       countriesData.push(countryInfo);
     }
 
+    console.log("scraping complete...");
     driver.quit();
 
-    return countriesData
+    return countriesData;
   }
+  return await run()
+};
 
-  const countriesData = await run()
+function validateCountriesData(countriesData = []) {
+  console.log("validating data...");
+  const worldData = countriesData.find((e) => e[0] === "World");
+  if (worldData[1] < 1000000)
+    throw new Error(
+      "scraped data failed. test to see if world test data is more than a million failed. see source code."
+    );
+}
 
+function writeDataToWebsiteSource(countriesData) {
+  console.log("writing data to src/data.json...");
   const fs = require("fs");
   const path = require("path");
+  const data = {
+    lastUpdated: new Date().toISOString().split('T')[0], // format: `2020-04-05`
+    countriesData,
+  };
   fs.writeFileSync(
-    path.join(__dirname, "../", "data.json"),
-    JSON.stringify(countriesData, null, 2)
+    path.join(__dirname, "../src", "data.json"),
+    JSON.stringify(data, null, 2)
   );
+}
 
+const handler = async () => {
+  const countriesData = await scrapeWorldometersCoronavirusTable();
+  validateCountriesData(countriesData);
+  writeDataToWebsiteSource(countriesData);
+  console.log('scraping complete.')
 };
 
 handler();
