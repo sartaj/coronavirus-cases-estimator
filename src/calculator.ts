@@ -37,7 +37,7 @@ interface Estimator {
   countryName: string;
   reportedTotalDeaths: number;
   reportedTotalCases: number;
-  estimatedTotalCasesBasedOnDeathsInIceland: number;
+  estimatedTotalCases: number;
 }
 
 export const estimator = (mostReliableTestData, data): Estimator[] => {
@@ -54,7 +54,7 @@ export const estimator = (mostReliableTestData, data): Estimator[] => {
       const reportedTotalDeaths = row[totalDeathsIndex];
       const reportedTotalCases = row[totalCasesIndex];
 
-      const estimatedTotalCasesBasedOnDeathsInIceland = calculateOffOfReliableData(
+      const estimatedTotalCases = calculateOffOfReliableData(
         mostReliableTotalCasesData,
         mostReliableDeathData,
         reportedTotalDeaths
@@ -64,7 +64,7 @@ export const estimator = (mostReliableTestData, data): Estimator[] => {
         countryName,
         reportedTotalDeaths,
         reportedTotalCases,
-        estimatedTotalCasesBasedOnDeathsInIceland,
+        estimatedTotalCases,
       };
     })
     .filter(
