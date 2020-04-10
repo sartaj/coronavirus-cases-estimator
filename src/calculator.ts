@@ -1,4 +1,6 @@
-const dataJson = require("./data.json");
+import { DataJson, Data } from "./types";
+
+const dataJson: DataJson = require("./data.json");
 const dataWithHeaders = dataJson.countriesData;
 const totalDeathsIndex = dataWithHeaders[0].indexOf("totalDeaths");
 const totalCasesIndex = dataWithHeaders[0].indexOf("totalCases");
@@ -8,7 +10,7 @@ export const lastUpdated = dataJson.lastUpdated;
 
 const MINIMIM_DEATH_THRESHOLD = 4;
 
-export const data = dataWithHeaders.slice(1);
+export const data = dataWithHeaders.slice(1) as Data[];
 
 export const calculateOffOfReliableData = (
   comparisonCountryTotalCases,
@@ -37,16 +39,20 @@ interface Estimator {
   countryName: string;
   reportedTotalDeaths: number;
   reportedTotalCases: number;
-  estimatedTotalCases: number;
+  estimatedTotalCases: string;
 }
 
-export const estimator = (mostReliableTestData, data): Estimator[] => {
-  const mostReliable = data.find(
-    (country) => country[0] === mostReliableTestData
-  );
+export const estimator = (
+  countriesToCompare: string[],
+  data: Data[]
+): Estimator[] => {
+  const dataToCompare = countriesToCompare.map((countryName) => {
+    const country = data.find((country) => country[0] === countryName);
 
-  const mostReliableDeathData = mostReliable[totalDeathsIndex];
-  const mostReliableTotalCasesData = mostReliable[totalCasesIndex];
+    const totalDeaths = country[totalDeathsIndex];
+    const totalCases = country[totalCasesIndex];
+    return { totalDeaths, totalCases };
+  });
 
   const dataWithEstimatedTotals = data
     .map((row) => {
@@ -54,11 +60,17 @@ export const estimator = (mostReliableTestData, data): Estimator[] => {
       const reportedTotalDeaths = row[totalDeathsIndex];
       const reportedTotalCases = row[totalCasesIndex];
 
-      const estimatedTotalCases = calculateOffOfReliableData(
-        mostReliableTotalCasesData,
-        mostReliableDeathData,
-        reportedTotalDeaths
+      const comparisons = dataToCompare.map((comparisonCountry) =>
+        calculateOffOfReliableData(
+          comparisonCountry.totalCases,
+          comparisonCountry.totalDeaths,
+          reportedTotalDeaths
+        )
       );
+
+      const estimatedTotalCases = `${Math.min(...comparisons)} - ${Math.max(
+        ...comparisons
+      )}`;
 
       return {
         countryName,
