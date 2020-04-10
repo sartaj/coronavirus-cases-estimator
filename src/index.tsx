@@ -2,7 +2,7 @@ import { Card, List, Typography } from "antd";
 import "antd/dist/antd.css";
 import * as React from "react";
 import { render } from "react-dom";
-import { data, estimator, lastUpdated } from "./calculator";
+import { estimatedTotalCasesData, lastUpdated } from "./calculator";
 import "./index.css";
 
 function camel2title(camelCase) {
@@ -173,15 +173,10 @@ const Article = () => (
 );
 
 const Data = () => {
-  const estimatedTotalCases = estimator(
-    ["Iceland", "Germany", "S. Korea"],
-    data
-  );
-
   return (
     <List
       itemLayout="vertical"
-      dataSource={estimatedTotalCases}
+      dataSource={estimatedTotalCasesData}
       renderItem={(d) => (
         <List.Item style={{ borderBottom: 0 }}>
           <Typography.Title level={3}>{d.countryName}</Typography.Title>

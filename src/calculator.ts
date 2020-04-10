@@ -8,7 +8,7 @@ const countryNameIndex = 0;
 
 export const lastUpdated = dataJson.lastUpdated;
 
-const MINIMIM_DEATH_THRESHOLD = 4;
+const MINIMIM_DEATH_THRESHOLD = 50;
 
 export const data = dataWithHeaders.slice(1) as Data[];
 
@@ -35,7 +35,7 @@ export const calculateOffOfReliableData = (
   return rounded;
 };
 
-interface Estimator {
+interface EstimatedTotalCasesData {
   countryName: string;
   reportedTotalDeaths: number;
   reportedTotalCases: number;
@@ -45,7 +45,7 @@ interface Estimator {
 export const estimator = (
   countriesToCompare: string[],
   data: Data[]
-): Estimator[] => {
+): EstimatedTotalCasesData[] => {
   const dataToCompare = countriesToCompare.map((countryName) => {
     const country = data.find((country) => country[0] === countryName);
 
@@ -56,9 +56,19 @@ export const estimator = (
 
   const dataWithEstimatedTotals = data
     .map((row) => {
-      const countryName = row[countryNameIndex];
-      const reportedTotalDeaths = row[totalDeathsIndex];
-      const reportedTotalCases = row[totalCasesIndex];
+      const countryName = row[countryNameIndex] as string;
+      const reportedTotalDeaths = row[totalDeathsIndex] as number;
+      const reportedTotalCases = row[totalCasesIndex] as number;
+
+      // ignore countries being compared
+      if (countriesToCompare.includes(countryName)) {
+        return {
+          countryName,
+          reportedTotalDeaths,
+          reportedTotalCases,
+          estimatedTotalCases: "N/A",
+        };
+      }
 
       const comparisons = dataToCompare.map((comparisonCountry) =>
         calculateOffOfReliableData(
@@ -80,8 +90,15 @@ export const estimator = (
       };
     })
     .filter(
-      ({ reportedTotalDeaths }) => reportedTotalDeaths > MINIMIM_DEATH_THRESHOLD
+      ({ reportedTotalDeaths, countryName }) =>
+        countriesToCompare.includes(countryName) ||
+        reportedTotalDeaths > MINIMIM_DEATH_THRESHOLD
     );
 
   return dataWithEstimatedTotals;
 };
+
+export const estimatedTotalCasesData = estimator(
+  ["Iceland", "Germany", "S. Korea"],
+  data
+);
