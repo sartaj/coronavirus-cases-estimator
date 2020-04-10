@@ -1,5 +1,9 @@
-import { Card, List, Typography } from "antd";
-import "antd/dist/antd.css";
+import Card from "antd/es/card";
+import "antd/es/card/style/css";
+import List from "antd/es/list";
+import "antd/es/list/style/css";
+import Typography from "antd/es/typography";
+import "antd/es/typography/style/css";
 import * as React from "react";
 import { render } from "react-dom";
 import { estimatedTotalCasesData, lastUpdated } from "./calculator";
