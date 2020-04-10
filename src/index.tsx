@@ -121,9 +121,9 @@ const Article = () => (
           <strong>SHOULD NOT be quoted as exact numbers</strong>, for many
           reasons: We not only have lagging data updated at different points in
           time, but Iceland's population is unique from many other countries' in
-          size, age, and even lifestyle. The goal of using Iceland's reported
-          infection rate is to get a better sense of the vast number of infected
-          people that are difficult to identify.
+          size, age, and even lifestyle. The goal of using the comparison
+          country's reported infection rate is to get a better sense of the vast
+          number of infected people that are difficult to identify.
         </li>
         <li>
           Death rates can vary widely by country, based on factors such as
@@ -151,11 +151,11 @@ const Article = () => (
     </Typography.Paragraph>
     <Typography.Title level={3}>Help Improve the Estimates</Typography.Title>
     <Typography.Paragraph style={{ fontSize: "16px" }}>
-      As Iceland approaches completing tests for the majority of their
-      population, these estimates should also improve. Adding more
-      considerations to the model such as ICU admittance stats and normalizing
-      for different nations based on age distribution will also improve results.{" "}
-      <br />
+      As Iceland, Germany, and South Korea approach completing tests for the
+      majority of their populations, these estimates should also improve. Adding
+      more considerations to the model such as ICU admittance stats and
+      normalizing for different nations based on age distribution will also
+      improve results. <br />
       <br />
       Want to help? Check out the{" "}
       <a href="http://github.com/sartaj/coronavirus-cases-estimator/">
