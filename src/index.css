@@ -1,21 +1,72 @@
 .content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
 }
 
 .country-card {
-    width: 600px;
-    margin-bottom: 10px;
+  width: 600px;
+  margin-bottom: 10px;
 }
 
 .header-text {
-    text-align: left;
-    padding: 1rem;
-    width: 100%;
-    max-width: 700px;
-    margin: 0 auto;
+  text-align: left;
+  padding: 1rem;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
+:root {
+    --hero-height: 70vh;
+}
+
+.article-container {
+    padding-top: calc(var(--hero-height) + 3rem);
+}
+
+.hero-div {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  /* background: rgb(212, 72, 85);
+    background-image: linear-gradient(rgb(240, 72, 85) 1px, transparent 0),
+    linear-gradient(90deg, rgb(240, 72, 85) 1px, transparent 0);
+    background-size: 25px 25px; */
+}
+.hero-container {
+  display: block;
+  max-height: var(--hero-height);
+}
+
+
+.hero-div-flex {
+  padding: 2vmax;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: var(--hero-height);
+}
+
+canvas {
+  display: block;
+}
+
+/* ---- particles.js container ---- */
+
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: var(--hero-height);
+  background-color: #b61924;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+}

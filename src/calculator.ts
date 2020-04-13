@@ -98,7 +98,6 @@ export const estimator = (
   return dataWithEstimatedTotals;
 };
 
-export const estimatedTotalCasesData = estimator(
-  ["Iceland", "Germany", "S. Korea"],
-  data
-);
+export const countriesToCompare = ["Iceland", "Germany", "S. Korea"];
+
+export const estimatedTotalCasesData = estimator(countriesToCompare, data);
