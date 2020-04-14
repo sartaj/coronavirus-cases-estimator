@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "parcel ./src/index.html",
-    "predeploy": "rm -rf dist && parcel build ./src/index.html --public-url /coronavirus-cases-estimator && cp src/united-states-total-potential-coronavirus-cases.png dist/",
+    "build": "parcel build ./src/index.html --public-url /coronavirus-cases-estimator && cp src/united-states-total-potential-coronavirus-cases.png dist/",
+    "social-media-image": "cp src/united-states-total-potential-coronavirus-cases.png dist/",
+    "predeploy": "rm -rf dist && npm run build && npm run social-media-image",
     "deploy": "gh-pages -d dist",
     "scrape-data": "cd covid19-scraper && node index.js",
     "update": "npm run scrape-data && git commit -am 'update data' && git push && npm run deploy"
