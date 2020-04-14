@@ -24,7 +24,7 @@
 }
 
 .article-container {
-    padding-top: calc(var(--hero-height) + 3rem);
+    padding-top: 3rem;
 }
 
 .hero-div {
@@ -39,9 +39,9 @@
     linear-gradient(90deg, rgb(240, 72, 85) 1px, transparent 0);
     background-size: 25px 25px; */
 }
-.hero-container {
+.hero-container, .hero-text {
   display: block;
-  max-height: var(--hero-height);
+  height: var(--hero-height);
 }
 
 

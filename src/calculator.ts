@@ -1,6 +1,7 @@
-import { DataJson, Data } from "./types";
+import * as ds from "./data.json";
+import { Data, DataJson } from "./types";
 
-const dataJson: DataJson = require("./data.json");
+const dataJson = ds as DataJson;
 const dataWithHeaders = dataJson.countriesData;
 const totalDeathsIndex = dataWithHeaders[0].indexOf("totalDeaths");
 const totalCasesIndex = dataWithHeaders[0].indexOf("totalCases");

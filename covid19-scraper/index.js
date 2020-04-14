@@ -1,43 +1,44 @@
 "use strict";
 
+const webdriver = require("selenium-webdriver");
+const chrome = require("selenium-webdriver/chrome");
+const chromedriver = require("chromedriver");
+
+function setUpSelenium(flags = []) {
+  console.log("setting up selenium...");
+  chrome.setDefaultService(
+    new chrome.ServiceBuilder(chromedriver.path).build()
+  );
+  var builder = new webdriver.Builder().forBrowser("chrome");
+  var chromeOptions = new chrome.Options();
+  const defaultChromeFlags = [
+    "--headless",
+    "--disable-gpu",
+    "--no-sandbox",
+    "--user-data-dir=/tmp/user-data",
+    "--hide-scrollbars",
+    "--enable-logging",
+    "--log-level=0",
+    "--v=99",
+    "--single-process",
+    "--data-path=/tmp/data-path",
+    "--ignore-certificate-errors",
+    "--homedir=/tmp",
+    "--disk-cache-dir=/tmp/cache-dir",
+    ...flags,
+  ];
+
+  // chromeOptions.setChromeBinaryPath("/var/task/lib/chrome");
+  chromeOptions.addArguments(defaultChromeFlags);
+  builder
+    .withCapabilities(webdriver.Capabilities.chrome())
+    .setChromeOptions(chromeOptions);
+
+  var driver = builder.build();
+  return driver;
+}
+
 const scrapeWorldometersCoronavirusTable = async () => {
-  const webdriver = require("selenium-webdriver");
-  const chrome = require("selenium-webdriver/chrome");
-  const chromedriver = require("chromedriver");
-
-  function setUpSelenium() {
-    console.log("setting up selenium...");
-    chrome.setDefaultService(
-      new chrome.ServiceBuilder(chromedriver.path).build()
-    );
-    var builder = new webdriver.Builder().forBrowser("chrome");
-    var chromeOptions = new chrome.Options();
-    const defaultChromeFlags = [
-      "--headless",
-      "--disable-gpu",
-      "--no-sandbox",
-      "--user-data-dir=/tmp/user-data",
-      "--hide-scrollbars",
-      "--enable-logging",
-      "--log-level=0",
-      "--v=99",
-      "--single-process",
-      "--data-path=/tmp/data-path",
-      "--ignore-certificate-errors",
-      "--homedir=/tmp",
-      "--disk-cache-dir=/tmp/cache-dir",
-    ];
-
-    // chromeOptions.setChromeBinaryPath("/var/task/lib/chrome");
-    chromeOptions.addArguments(defaultChromeFlags);
-    builder
-      .withCapabilities(webdriver.Capabilities.chrome())
-      .setChromeOptions(chromeOptions);
-
-    var driver = builder.build();
-    return driver;
-  }
-
   async function run() {
     const driver = setUpSelenium();
 
@@ -88,11 +89,12 @@ const scrapeWorldometersCoronavirusTable = async () => {
     }
 
     console.log("scraping complete...");
-    driver.quit();
+    await driver.quit();
+    await chromedriver.stop();
 
     return countriesData;
   }
-  return await run()
+  return await run();
 };
 
 function validateCountriesData(countriesData = []) {
@@ -109,7 +111,7 @@ function writeDataToWebsiteSource(countriesData) {
   const fs = require("fs");
   const path = require("path");
   const data = {
-    lastUpdated: new Date().toISOString().split('T')[0], // format: `2020-04-05`
+    lastUpdated: new Date().toISOString().split("T")[0], // format: `2020-04-05`
     countriesData,
   };
   fs.writeFileSync(
@@ -118,11 +120,71 @@ function writeDataToWebsiteSource(countriesData) {
   );
 }
 
-const handler = async () => {
+const runScraper = async () => {
   const countriesData = await scrapeWorldometersCoronavirusTable();
   validateCountriesData(countriesData);
   writeDataToWebsiteSource(countriesData);
-  console.log('scraping complete.')
+  console.log("scraping complete.");
+};
+
+const checkIfPortRunning = (port) => {
+  const detect = require("detect-port");
+  return new Promise((resolve, reject) => {
+    detect(port, (err, _port) => {
+      if (err) {
+        reject(err);
+      }
+
+      if (port == _port) {
+        console.log(`dev server not running.`);
+        resolve(false);
+      } else {
+        console.log(`dev server running`);
+        resolve(true);
+      }
+    });
+  });
+};
+const scrapeSocialMediaImageMaker = async () => {
+  const devServerRunning = await checkIfPortRunning(1234);
+  if (!devServerRunning) {
+    console.log("skipping image creation");
+    return false;
+  }
+
+  const driver = setUpSelenium(["--window-size=1200,930"]);
+
+  console.log("opening localhost...");
+  driver.get("http://localhost:1234/");
+
+  const hero = await driver.findElement(
+    webdriver.By.xpath('//*[@class="hero-container"]')
+  );
+
+  console.log("taking screenshot...");
+  await hero.takeScreenshot().then((image, err) => {
+    require("fs").writeFile(
+      require("path").join(
+        __dirname,
+        "../dist/united-states-total-potential-coronavirus-cases.png"
+      ),
+      image,
+      "base64",
+      function (err) {
+        console.log(err);
+      }
+    );
+  });
+
+  await driver.quit();
+  await chromedriver.stop();
+
+  return true;
+};
+
+const handler = async () => {
+  await runScraper();
+  await scrapeSocialMediaImageMaker();
 };
 
 handler();
