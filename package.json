@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "parcel ./src/index.html",
-    "predeploy": "rm -rf dist && parcel build ./src/index.html --public-url /coronavirus-cases-estimator",
+    "predeploy": "rm -rf dist && parcel build ./src/index.html --public-url /coronavirus-cases-estimator && cp src/united-states-total-potential-coronavirus-cases.png dist/",
     "deploy": "gh-pages -d dist",
     "scrape-data": "cd covid19-scraper && node index.js",
-    "update-data": "npm run scrape-data && git commit -am 'update data' && git push && npm run deploy"
+    "update": "npm run scrape-data && git commit -am 'update data' && git push && npm run deploy"
   },
   "author": "",
   "license": "ISC",

@@ -166,7 +166,7 @@ const scrapeSocialMediaImageMaker = async () => {
     require("fs").writeFile(
       require("path").join(
         __dirname,
-        "../dist/united-states-total-potential-coronavirus-cases.png"
+        "../src/united-states-total-potential-coronavirus-cases.png"
       ),
       image,
       "base64",
