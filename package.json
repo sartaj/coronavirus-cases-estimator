@@ -6,11 +6,11 @@
   "scripts": {
     "dev": "parcel ./src/index.html",
     "build": "parcel build ./src/index.html --public-url /coronavirus-cases-estimator && cp src/united-states-total-potential-coronavirus-cases.png dist/",
-    "social-media-image": "cp src/united-states-total-potential-coronavirus-cases.png dist/",
+    "social-media-image": "echo 'to update social media image, run scraper with dev server' && cp src/united-states-total-potential-coronavirus-cases.png dist/",
     "predeploy": "rm -rf dist && npm run build && npm run social-media-image",
     "deploy": "gh-pages -d dist",
     "scrape-data": "cd covid19-scraper && node index.js",
-    "update": "npm run scrape-data && git commit -am 'update data' && git push && npm run deploy"
+    "update": "npm run scrape-data && npm run social-media-image && git commit -am 'update data' && git push && npm run deploy"
   },
   "author": "",
   "license": "ISC",

@@ -1,12 +1,22 @@
 import * as ds from "./data.json";
-import { Data, DataJson } from "./types";
+import * as ad from "./age-distribution.json";
+
+import { Data, DataJson, AgeDistributionJson } from "./types";
 
 const dataJson = ds as DataJson;
+const ageDistributionJson = ad as AgeDistributionJson;
 const dataWithHeaders = dataJson.countriesData;
 const totalDeathsIndex = dataWithHeaders[0].indexOf("totalDeaths");
 const totalCasesIndex = dataWithHeaders[0].indexOf("totalCases");
 const countryNameIndex = 0;
 
+// https://www.businessinsider.com/coronavirus-in-charts-covid-19-symptoms-spread-deaths-warnings-2020-2#overall-the-coronavirus-is-far-more-deadly-than-the-flu-19
+const SeniorDeathRates = 10.4 + 4.3 + 2.7;
+const MidDeathRates = 1.4 + 0.5 + 0.1;
+const TotalDeathRates = SeniorDeathRates + MidDeathRates;
+const SeniorTotalDeathRates = SeniorDeathRates / TotalDeathRates;
+const MidTotalDeathRates = MidDeathRates / TotalDeathRates;
+console.log(SeniorTotalDeathRates, MidTotalDeathRates);
 export const lastUpdated = dataJson.lastUpdated;
 
 const MINIMIM_DEATH_THRESHOLD = 50;
@@ -26,6 +36,13 @@ export const calculateOffOfReliableData = (
           ---------                 =           --------------
               x                            comparisonCountryTotalCases
   */
+
+    /*
+        reportedTotalDeaths               countryAgeDistribution
+          ---------                 =           --------------
+              x                            comparisonCountryTotalCases
+  */
+
 
   const estimatedTotalCasesData =
     (reportedTotalDeaths * comparisonCountryTotalCases) /
